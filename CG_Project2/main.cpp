@@ -156,7 +156,7 @@ bool GGProject2::Init()
     if (!pMesh1->LoadMesh("../Models/female-zombie/female-zombie.obj")) {
         return false;
     }
-
+	//sadsafg
     pMesh2 = new BasicMesh();
 
     if (!pMesh2->LoadMesh("../Content/box.obj")) {

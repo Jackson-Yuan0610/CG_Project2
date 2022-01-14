@@ -153,13 +153,13 @@ bool GGProject2::Init()
 
     pMesh1 = new BasicMesh();
 
-    if (!pMesh1->LoadMesh("../Models/female-zombie/female-zombie.obj")) {
+    if (!pMesh1->LoadMesh("../Content/box.obj")) {
         return false;
     }
-	//sadsafg
+	
     pMesh2 = new BasicMesh();
 
-    if (!pMesh2->LoadMesh("../Content/box.obj")) {
+    if (!pMesh2->LoadMesh("D:/Software Engineering/Sem 5 Computer Graphic/wolden_table/WoodenTable.obj")) {
         return false;
     }
 
@@ -242,7 +242,7 @@ void GGProject2::RenderSceneCB()
         meshWorldTransform.SetPosition(0.0f, -4.0f + abs(sinf(counter2) * 4), 0.0f);
     }
     else {
-        meshWorldTransform.SetPosition(0.0f, -4.0f, 0.0f);
+        meshWorldTransform.SetPosition(3.0f, 1.0f, 0.0f);
     }
 
     World = meshWorldTransform.GetMatrix();
@@ -266,7 +266,9 @@ void GGProject2::RenderSceneCB()
 
     WorldTrans& meshWorldTransform2 = pMesh2->GetWorldTransform();
     //  meshWorldTransform2.SetRotation(0.0f, -45.0f, 0.0f);
-    meshWorldTransform2.SetPosition(0.0f, 2.0f, 1.0f);
+	meshWorldTransform2.SetScale(5.0f);
+    meshWorldTransform2.SetPosition(-5.0f, 2.0f, 1.0f);
+
     World = meshWorldTransform2.GetMatrix();
     WVP = Projection * View * World;
     pLightingTech->SetWVP(WVP);

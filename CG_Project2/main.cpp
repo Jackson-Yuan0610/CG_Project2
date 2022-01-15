@@ -59,6 +59,7 @@ private:
     BasicMesh* pBox = NULL;
     BasicMesh* pMesh1 = NULL;
     BasicMesh* pMesh2 = NULL;
+	BasicMesh* pMesh3 = NULL;
 
     //BasicMesh* Bed = NULL;
     //BasicMesh* Table = NULL;
@@ -131,6 +132,10 @@ GGProject2::~GGProject2()
         delete pMesh2;
     }
 
+	if (pMesh3) {
+		delete pMesh3;
+	}
+
     if (pLightingTech) {
         delete pLightingTech;
     }
@@ -163,6 +168,11 @@ bool GGProject2::Init()
         return false;
     }
 
+	pMesh3 = new BasicMesh();
+
+	if (!pMesh3->LoadMesh("D:/Software Engineering/Sem 5 Computer Graphic/food_apple/food_apple.obj")) {
+		return false;
+	}
 
     pLightingTech = new LightingTechnique();
 
@@ -287,6 +297,30 @@ void GGProject2::RenderSceneCB()
     pLightingTech->SetCameraLocalPos(CameraLocalPos3f);
 
     pMesh2->Render();
+
+	WorldTrans& meshWorldTransform3 = pMesh3->GetWorldTransform();
+	//  meshWorldTransform2.SetRotation(0.0f, -45.0f, 0.0f);
+	meshWorldTransform3.SetScale(5.0f);
+	meshWorldTransform3.SetPosition(-5.0f, 4.1f, 1.0f);
+
+	World = meshWorldTransform3.GetMatrix();
+	WVP = Projection * View * World;
+	pLightingTech->SetWVP(WVP);
+
+	pointLights[0].CalcLocalPosition(meshWorldTransform3);
+	pointLights[1].CalcLocalPosition(meshWorldTransform3);
+	pLightingTech->SetPointLights(2, pointLights);
+
+	spotLights[0].CalcLocalDirectionAndPosition(meshWorldTransform3);
+	spotLights[1].CalcLocalDirectionAndPosition(meshWorldTransform3);
+	pLightingTech->SetSpotLights(2, spotLights);
+
+	pLightingTech->SetMaterial(pMesh3->GetMaterial());
+
+	CameraLocalPos3f = meshWorldTransform3.WorldPosToLocalPos(pGameCamera->GetPos());
+	pLightingTech->SetCameraLocalPos(CameraLocalPos3f);
+
+	pMesh3->Render();
 
     glutPostRedisplay();
     glutSwapBuffers();

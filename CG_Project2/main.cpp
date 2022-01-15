@@ -277,7 +277,8 @@ void GGProject2::RenderSceneCB()
     WorldTrans& meshWorldTransform2 = pMesh2->GetWorldTransform();
     //  meshWorldTransform2.SetRotation(0.0f, -45.0f, 0.0f);
 	meshWorldTransform2.SetScale(5.0f);
-    meshWorldTransform2.SetPosition(-5.0f, 2.0f, 1.0f);
+    meshWorldTransform2.SetPosition(-1.0f, 1.0f, 1.0f);
+	
 
     World = meshWorldTransform2.GetMatrix();
     WVP = Projection * View * World;
@@ -299,9 +300,16 @@ void GGProject2::RenderSceneCB()
     pMesh2->Render();
 
 	WorldTrans& meshWorldTransform3 = pMesh3->GetWorldTransform();
-	//  meshWorldTransform2.SetRotation(0.0f, -45.0f, 0.0f);
+	//meshWorldTransform3.SetRotation(-30.0f, -45.0f, 0.0f);
 	meshWorldTransform3.SetScale(5.0f);
-	meshWorldTransform3.SetPosition(-5.0f, 4.1f, 1.0f);
+	meshWorldTransform3.SetPosition(-1.0f, 3.4f, 1.0f);
+	float angle = 0.0;
+	angle += 1.0;
+	if (angle > 180.0) {
+		angle = angle - 180.0;
+	}
+	meshWorldTransform3.Rotate(angle, 0.0, angle);
+	
 
 	World = meshWorldTransform3.GetMatrix();
 	WVP = Projection * View * World;
